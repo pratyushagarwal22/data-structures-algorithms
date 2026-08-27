@@ -22,14 +22,3 @@ class Solution:
         """
         # TODO: implement the solution here
         pass
-
-
-if __name__ == "__main__":
-    solution = Solution()
-
-    # Placeholder test case — replace with a real example.
-    sample_input = None
-    expected = None
-
-    result = solution.solve(sample_input)
-    print(f"input={sample_input!r} -> result={result!r} (expected={expected!r})")
