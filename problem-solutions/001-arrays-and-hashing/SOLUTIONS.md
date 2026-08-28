@@ -96,3 +96,47 @@ for i, num in enumerate(nums):
 - Return the smaller index first — since we iterate left to right, `hashmap[complement]` is always the earlier index
 - The problem guarantees exactly one answer so no need to handle the no-result case
 - Brute force nested loop approach works but is O(n²) — not acceptable at scale
+
+---
+
+## Valid Anagram
+
+🔗 [NeetCode](https://neetcode.io/problems/is-anagram) | [LeetCode](https://leetcode.com/problems/valid-anagram/description/) | 🟢 Easy | 📁 [242_valid_anagram.py](./242_valid_anagram.py)
+
+### Problem Statement
+Given two strings, return true if they are anagrams of each other — meaning they contain the exact same characters with the same frequency, regardless of order.
+
+### Approach
+
+- **Pattern:** Hash Map (Character Frequency Count)
+- **Why it fits:** An anagram is just a frequency equality problem. A hash map lets us count occurrences of each character in O(n) and compare both maps directly.
+- **Key Insight:** Two strings are anagrams if and only if their character frequency maps are identical. Length check first as an early exit — if lengths differ they can't be anagrams.
+- **Algorithm Strategy:**
+  1. If lengths differ, return False immediately
+  2. Build a frequency map for each string simultaneously in one loop
+  3. Return whether the two maps are equal
+
+### Pseudocode
+
+```
+if len(s) != len(t):
+    return False
+
+countS, countT = {}, {}
+for i in range(len(s)):
+    countS[s[i]] = 1 + countS.get(s[i], 0)
+    countT[t[i]] = 1 + countT.get(t[i], 0)
+
+return countS == countT
+```
+
+### Complexity
+
+- **Time:** O(n + m) — one pass to build both frequency maps, where n and m are the lengths of s and t
+- **Space:** O(1) — at most 26 keys in each map since input is lowercase English letters only
+
+### Notes & Gotchas
+
+- Space is technically O(1) not O(n) here because the character set is fixed at 26 letters
+- Sorting approach (O(n log n)) is simpler to write but less optimal
+- `dict.get(key, 0)` is the clean way to handle missing keys without a try/except or if/else
