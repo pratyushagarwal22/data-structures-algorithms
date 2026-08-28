@@ -53,3 +53,46 @@ return False
 - Empty array: loop never runs, returns False — correct behavior
 - Don't confuse `set` with `dict` — we only need membership, not key-value pairs
 - Beats sorting O(n log n) and nested loops O(n²)
+
+---
+
+## Two Sum
+
+🔗 [NeetCode](https://neetcode.io/problems/two-integer-sum) | [LeetCode](https://leetcode.com/problems/two-sum/description/) | 🟢 Easy | 📁 [002_two_sum.py](./002_two_sum.py)
+
+### Problem Statement
+Given an array of integers and a target value, return the indices of the two numbers that add up to the target. The smaller index should come first. Exactly one valid answer is guaranteed.
+
+### Approach
+
+- **Pattern:** Hash Map
+- **Why it fits:** We need to find a complement for each number in O(1) — a hash map lets us store numbers we've already seen and look up their index instantly.
+- **Key Insight:** For every number, the answer is already determined — it's `target - num`. So instead of searching the array for that complement, just check if it's already in the map as you go.
+- **Algorithm Strategy:**
+  1. Initialize an empty hash map (num → index)
+  2. Iterate through the array
+  3. Calculate complement = target - current number
+  4. If complement is in the map, return [map[complement], current index]
+  5. Otherwise store current number and its index in the map
+
+### Pseudocode
+
+```
+hashmap = {}
+for i, num in enumerate(nums):
+    complement = target - num
+    if complement in hashmap:
+        return [hashmap[complement], i]
+    hashmap[num] = i
+```
+
+### Complexity
+
+- **Time:** O(n) — single pass through the array; each hash map lookup and insert is O(1)
+- **Space:** O(n) — worst case we store every element in the hash map before finding the answer
+
+### Notes & Gotchas
+
+- Return the smaller index first — since we iterate left to right, `hashmap[complement]` is always the earlier index
+- The problem guarantees exactly one answer so no need to handle the no-result case
+- Brute force nested loop approach works but is O(n²) — not acceptable at scale
